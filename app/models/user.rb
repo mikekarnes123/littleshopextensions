@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  include ActionView::Helpers::NumberHelper
   before_save { self.email = email.downcase }
 
   validates_presence_of :email,
@@ -10,7 +11,7 @@ class User < ApplicationRecord
                         :role
   has_many :orders
   has_many :items
-  has_many :addresses 
+  has_many :addresses
 
   enum role: ['user', 'merchant', 'admin']
 
@@ -184,5 +185,19 @@ class User < ApplicationRecord
   def downgrade_to_regular_user
     update(role: "user")
     items.update_all(active: false)
+  end
+
+  def unfulfilled_rev_status
+    unfulfilled = items.map do |item|
+      item.order_items.where(fulfilled:false)
+    end
+    return 0 if unfulfilled.empty?
+    return 0 if unfulfilled[0][0] == nil
+    total = 0
+    unfulfilled.each do |oi|
+      oi = oi.first
+      total += (oi.quantity * oi.price_per_item)
+    end
+    "You have #{unfulfilled.count} unfulfilled orders worth #{number_to_currency(total)}"
   end
 end
