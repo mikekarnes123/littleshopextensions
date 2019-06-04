@@ -15,6 +15,7 @@
       <li><%= address.street_address %>, <%= address.city %> <%= address.state %> <%= address.zip %></li>
     </ul>
     <%= link_to "Delete This Address", address_path(address), method: :delete %>
+    <%= link_to "Edit", edit_user_address_path(current_user, address) %>
   </section>
   <% end %>
 </div>
