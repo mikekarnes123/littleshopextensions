@@ -1,6 +1,7 @@
 class User::UsersController < User::BaseController
   def show
     @user_orders = current_user.orders
+    @addresses = current_user.addresses
   end
 
   def edit

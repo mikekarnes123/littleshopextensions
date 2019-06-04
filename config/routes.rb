@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :users do
+    resources :addresses, only: [:new, :create]
+  end
 
   # PUBLIC PAGE ROUTES
   root to: "welcome#index"
@@ -9,6 +12,8 @@ Rails.application.routes.draw do
   # NEW USER REGISTRATION ROUTES
   get '/register', to: "users#new"
   resources :users, only: [:create]
+
+
 
   # LOGIN/LOGOUT ROUTES
   get '/login', to: "sessions#new"

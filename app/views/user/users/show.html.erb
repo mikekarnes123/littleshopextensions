@@ -5,6 +5,15 @@
 <p><%= current_user.zip %></p>
 
 <%= link_to "Edit My Profile or Password", profile_edit_path %>
+<div class="addresses">
+  <% @addresses.each do |address| %>
+    <h3><%= address.title %>: </h3>
+    <ul>
+      <li><%= address.street_address %>, <%= address.city %> <%= address.state %> <%= address.zip %></li>
+    </ul>
+  <% end %>
+</div>
+<%= link_to "Add Another Address", new_user_address_path(current_user) %>
 
 <% if @user_orders.any? %>
   <p><%= link_to "My Orders", user_orders_path %></p>
