@@ -56,4 +56,28 @@ RSpec.describe "Users can have multiple addresses", type: :feature do
 
     end
   end
+
+  xit 'allows a user to edit an existing address' do
+    user = create(:user)
+    address = user.addresses.create(title: 'work', street_address: 'road street', city: 'abcton', state: 'CO', zip: '818189')
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit profile_path
+
+    within("#address-id-#{address.id}") do
+      click_link("Edit")
+    end
+
+    expect(current_path).to eq(edit_user_address_path(user, address))
+
+    fill_in "address[title]", with: "lake house"
+    click_on "Update Address"
+
+    expect(current_path).to eq(profile_path)
+
+    within("#address-id-#{user.addresses.last.id}") do
+      expect(page).to have_content("lake house")
+    end
+  end
+
 end

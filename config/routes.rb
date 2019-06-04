@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :users do
-    resources :addresses, only: [:new, :create]
+    resources :addresses, only: [:new, :create, :edit]
   end
-  resources :addresses, only: [:destroy]
+  resources :addresses, only: [:destroy, :update]
 
   # PUBLIC PAGE ROUTES
   root to: "welcome#index"
