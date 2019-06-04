@@ -1,15 +1,15 @@
 <div style="margin-top: 5%;">
 <%= form_for [@user, @address] do |f| %>
    <%= f.label :title %>
-   <%= f.text_field :title %>
+   <%= f.text_field :title, required: true %>
    <%= f.label :street_address %>
-   <%= f.text_field :street_address %>
+   <%= f.text_field :street_address, required: true %>
    <%= f.label :city %>
-   <%= f.text_field :city %>
+   <%= f.text_field :city, required: true %>
    <%= f.label :state %>
-   <%= f.text_field :state %>
+   <%= f.text_field :state, required: true %>
    <%= f.label :zip %>
-   <%= f.text_field :zip %>
+   <%= f.text_field :zip, required: true %>
    <%= f.submit %>
 <% end %>
 </div>

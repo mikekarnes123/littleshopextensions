@@ -5,8 +5,7 @@ class AddressesController < ApplicationController
   end
 
   def create
-    user = User.find(params[:user_id])
-    user.addresses.create!(address_params)
+    current_user.addresses.create(address_params)
     redirect_to profile_path
   end
 

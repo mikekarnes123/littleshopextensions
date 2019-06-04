@@ -25,7 +25,7 @@ RSpec.describe "Users can have multiple addresses", type: :feature do
         expect(current_path).to eq(profile_path)
         expect(page).to have_content(user.address)
         expect(page).to have_content("123 go to santa lane")
-
+        save_and_open_page
 
     end
   end
