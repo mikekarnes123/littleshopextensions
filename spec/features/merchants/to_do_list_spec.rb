@@ -10,7 +10,7 @@ RSpec.describe "Merchant To-Do", type: :feature do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
 
       visit merchant_dashboard_path
-
+      save_and_open_page
       within(".to-do-list") do
         within("#id-#{item_3.id}-needs-img") do
           expect(page).to have_link('here')
