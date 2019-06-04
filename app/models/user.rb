@@ -200,4 +200,11 @@ class User < ApplicationRecord
     end
     "You have #{unfulfilled.count} unfulfilled orders worth #{number_to_currency(total)}"
   end
+
+  def overordered_items
+    items.map do |item|
+      item.name if item.order_items.sum(:quantity) > item.inventory
+    end
+  end
+
 end

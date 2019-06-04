@@ -50,5 +50,19 @@ RSpec.describe "Merchant To-Do", type: :feature do
         expect(page).to have_content("Not Enough Stock To Complete Order")
       end
     end
+
+    it 'should display error if item is being overordered' do
+      merchant = create(:merchant)
+      item_1 = create(:item, user: merchant, inventory: 0)
+
+      oi_1 = create(:order_item, item: item_1, quantity: 10)
+      oi_2 = create(:order_item, item: item_1, quantity: 5)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
+
+      visit merchant_dashboard_path
+
+      expect(page).to have_content("#{item_1.name} is being overordered.")
+
+    end
   end
 end
