@@ -198,4 +198,14 @@ RSpec.describe Item, type: :model do
       expect(item_1.item_orders(order_2)).to eq([oi_2])
     end
   end
+
+  it "#with_no_image returns all of a merchants items with no image" do
+    merchant = create(:merchant)
+    item_1 = create(:item, user: merchant)
+    item_2 = merchant.items.create(name: 'Item 2', active: true, price: 1.00, description: 'Stuff 1', inventory: 1)
+    merchant_2 = create(:merchant)
+    item_3 = merchant_2.items.create(name: 'Item 2', active: true, price: 1.00, description: 'Stuff 1', inventory: 1)
+
+    expect(merchant.items.with_no_image).to eq([item_2])
+  end
 end

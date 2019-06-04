@@ -26,6 +26,10 @@ class Item < ApplicationRecord
     .limit(limit)
   end
 
+  def self.with_no_image
+    where(image: nil)
+  end
+
   def average_fulfillment_time
     if order_items.where("order_items.fulfilled").count > 0
       order_items.where("order_items.fulfilled").average("updated_at - created_at").to_i

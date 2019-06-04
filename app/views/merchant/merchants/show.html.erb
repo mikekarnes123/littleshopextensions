@@ -1,4 +1,14 @@
 <%= link_to 'View all items for sale', merchant_items_path %>
+<div class="to-do-list">
+  <% @no_image_items.each do |item| %>
+    <section id="id-<%= item.id %>-needs-img">
+      <h3>Item: <%= item.name %> does not have an image.<br>
+      click <%= link_to "here", edit_merchant_item_path(item) %> to add one!</h3>
+    </section>
+  <% end %>
+</div>
+
+
 <div id="statistics">
   <h2>Statistics</h2>
   <div id="stats-top-five">
