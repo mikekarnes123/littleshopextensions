@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :users do
     resources :addresses, only: [:new, :create]
   end
+  resources :addresses, only: [:destroy]
 
   # PUBLIC PAGE ROUTES
   root to: "welcome#index"
