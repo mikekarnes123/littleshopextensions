@@ -25,7 +25,31 @@ RSpec.describe "Users can have multiple addresses", type: :feature do
         expect(current_path).to eq(profile_path)
         expect(page).to have_content(user.address)
         expect(page).to have_content("123 go to santa lane")
-        save_and_open_page
+    end
+
+    it 'should allow each address to be deleted' do
+      user = create(:user)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit profile_path
+
+      click_link("Add Another Address")
+
+      fill_in "address[street_address]", with: "123 go to santa lane"
+      fill_in "address[title]", with: "work"
+      fill_in "address[city]", with: "aurora"
+      fill_in "address[state]", with: "colorado"
+      fill_in "address[zip]", with: "123311"
+      click_on "Create Address"
+
+      within("#address-id-#{user.addresses.last.id}") do
+        click_on "Delete This Address"
+      end
+
+      expect(current_path).to eq(profile_path)
+      expect(current_page).to_not have_content("123 go to santa lane")
+      expect(current_page).to_not have_content("work")
+      expect(current_page).to_not have_content("aurora")
 
     end
   end
