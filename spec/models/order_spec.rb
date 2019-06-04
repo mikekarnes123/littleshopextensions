@@ -205,4 +205,14 @@ RSpec.describe Order, type: :model do
       expect(@order_2.total_value_for_merchant(@merchant)).to eq(11.75)
     end
   end
+
+  it "stock_check should return alert if not enough stock" do
+    merchant = create(:merchant)
+
+    item_1 = create(:item, user: merchant, inventory: 10)
+    order_1 = create(:order)
+    oi_1 = create(:order_item, order: order_1, quantity: 15)
+
+    expect(order_1.stock_check(oi_1.quantity)).to eq(true)
+  end
 end

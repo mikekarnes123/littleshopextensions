@@ -93,7 +93,11 @@
       <ul>
         <li>Date Ordered: <%= Date.strptime(order.created_at.to_s) %></li>
         <li>Total Quantity Ordered: <%= order.total_quantity_for_merchant(@merchant) %></li>
-        <li>Total Amount Owed: <%= number_to_currency(order.total_value_for_merchant(@merchant)) %></li>
+        <li>Total Amount Owed: <%= number_to_currency(order.total_value_for_merchant(@merchant)) %>
+
+        <% if order.stock_check(order.total_quantity_for_merchant(@merchant)) %>
+          Not Enough Stock To Complete Order
+        <% end %></li>
       </ul>
     </div>
   </div>

@@ -34,5 +34,21 @@ RSpec.describe "Merchant To-Do", type: :feature do
         expect(page).to have_content("You have 2 unfulfilled orders worth $150.00")
       end
     end
+
+    it 'should display a notification if insuficiant stock' do
+      merchant = create(:merchant)
+      item_1 = create(:item, user: merchant, inventory: 0)
+      item_2 = create(:item, user: merchant)
+
+      oi_1 = create(:order_item, item: item_1, quantity: 10, price_per_item: 10)
+      oi_2 = create(:order_item, item: item_2, quantity: 5, price_per_item: 10)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
+
+      visit merchant_dashboard_path
+
+      within("#merchant-orders-#{oi_1.order.id}") do
+        expect(page).to have_content("Not Enough Stock To Complete Order")
+      end
+    end
   end
 end

@@ -40,6 +40,11 @@ class Order < ApplicationRecord
         .limit(3)
   end
 
+  def stock_check(quantity_requested)
+    return true if items.first.inventory < quantity_requested
+    false
+  end
+
   def grand_total
     order_items.sum do |order_item|
       order_item.price_per_item * order_item.quantity
